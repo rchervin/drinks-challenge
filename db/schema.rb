@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912015120) do
+ActiveRecord::Schema.define(version: 20170912074615) do
 
   create_table "users", force: :cascade do |t|
     t.string   "screen_name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "last_tweet",  limit: 8, default: 0
   end
 
 end
