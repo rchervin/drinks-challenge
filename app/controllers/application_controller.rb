@@ -8,8 +8,10 @@ class ApplicationController < ActionController::Base
 
   def set_twitter_client
     @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV["DC_TWITTER_CONSUMER_KEY"]
-      config.consumer_secret     = ENV["DC_TWITTER_SECRET_KEY"]
+      config.consumer_key            = ENV["DC_TWITTER_CONSUMER_KEY"]
+      config.consumer_secret         = ENV["DC_TWITTER_SECRET_KEY"]
+      config.access_token            = ENV["DC_TWITTER_ACCESS_TOKEN"]
+      config.access_token_secret     = ENV["DC_TWITTER_ACCESS_TOKEN_SECRET"]
     end
   end
 end
