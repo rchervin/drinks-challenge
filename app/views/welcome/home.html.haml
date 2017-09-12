@@ -12,6 +12,9 @@
           %button#tweetbutton.button.is-primary{type: 'submit', action: 'search', method: :post, remote: true}
             Get Tweets
 
+  - if flash[:notice]
+    .notice= flash[:notice].last
+
 .hero-body.has-text-left
   .tweetbox
     - if !@tweets.nil?
@@ -20,7 +23,7 @@
           %article.media
             .media-left
               %figure.image.is-64x64
-                = image_tag 'http://bulma.io/images/placeholders/128x128.png'
+                = image_tag @user.profile_url
             .media-content
               .content
                 %span.icon.is-small.is-left
