@@ -1,6 +1,9 @@
 .hero-header.has-text-centered
   %h1.title.is-size-1 TwitterGitter
-  %p.subtitle The only demo app for Drinks.com that gets all your tweets without repeats.
+  %p.subtitle
+    The only demo app for
+    = link_to 'Drinks.com', 'http://drinks.com', target: '_blank'
+    that gets all your tweets without repeats.
   .column.is-half.is-offset-one-quarter
     %form#twitter-form.field
       .field.is-grouped
@@ -9,7 +12,7 @@
           %span.icon.is-small.is-left
             %i.fa.fa-twitter
         .control
-          %button#tweetbutton.button.is-primary{type: 'submit', action: 'search', method: :post, remote: true}
+          %button#tweetbutton.button.is-primary{type: 'submit', method: :post, remote: true}
             Get Tweets
 
   - if flash[:notice]

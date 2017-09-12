@@ -1,31 +1,36 @@
 class WelcomeController < ApplicationController
+  before_action :clear_flash
+  before_action :check_screen_name
 
   def home
-    if params[:screen_name].present?
-      begin
-        @user = User.find_or_create_by!(screen_name: params[:screen_name].downcase)
-        @tweets = @client.user_timeline(@user.screen_name).take(10)
+    begin
+    @user = User.find_or_create_by!(screen_name: params[:screen_name].downcase)
+    @tweets = @client.user_timeline(@user.screen_name).take(10)
 
-        if @tweets.empty?
-          flash[:notice] = :screen_name, "Sorry, this user has no tweets."
-        else
-          if @user.last_tweet < @tweets.first.id
-            @tweets.each do |tweet|
-              next if tweet.id <= @user.last_tweet
-              Tweet.create!(content: tweet.text, user: @user)
-            end
-            @user.update_attributes(last_tweet: @tweets.first.id)
-          end
-        end
+    if @tweets.present?
+      @user.get_tweets   @tweets
+      @user.update_photo @twitter_user.profile_image_url.path
+    else
+      flash[:notice] = :screen_name, "Sorry, @#{@user.screen_name} has no tweets."
+    end
 
-        @user.update_photo @client.user(@user.screen_name).profile_image_url.path
-      end
-
-      true
     rescue Twitter::Error => e
-      flash[:notice] = :screen_name, "Sorry, that user's tweets aren't available right now."
+      flash[:notice] = :screen_name, "@#{params[:screen_name]} cannot reach tweets."
+    end
+  end
 
-      false
+  private
+
+  def clear_flash
+    flash[:notice] = ""
+  end
+
+  def check_screen_name
+    begin
+      params[:screen_name] ||= "just_drinks"
+      @twitter_user = @client.user(params[:screen_name])
+    rescue Twitter::Error => e
+      flash[:notice] = :screen_name, "@#{params[:screen_name]} does not seem to have a twitter account."
     end
   end
 

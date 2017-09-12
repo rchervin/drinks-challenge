@@ -7,4 +7,22 @@ class User < ActiveRecord::Base
   def update_photo image
     update_attributes(profile_url: "http://pbs.twimg.com" + image)
   end
+
+  def get_tweets tweets
+    begin
+      if last_tweet < tweets.first.id
+        tweets.each do |tweet|
+          next if tweet.id <= last_tweet
+          Tweet.create!(content: tweet.text, user: @user)
+        end
+        update_attributes(last_tweet: tweets.first.id)
+      end
+
+      true
+    rescue Twitter::Error => e
+      flash[:notice] = :screen_name, "Sorry, that user's tweets aren't available right now."
+
+      false
+    end
+  end
 end

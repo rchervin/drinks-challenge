@@ -14,6 +14,11 @@
  *= require_self
  */
 
+ a {
+  color: #00d1b2 !important;
+ }
+
  .hero-header {
   padding: 30px;
  }
+
