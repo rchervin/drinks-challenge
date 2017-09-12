@@ -1,11 +1,32 @@
-%h1 Search
+.hero-header.has-text-centered
+  %h1.title.is-size-1 TwitterGitter
+  %p.subtitle The only demo app for Drinks.com that gets all your tweets without repeats.
+  .column.is-half.is-offset-one-quarter
+    %form#twitter-form.field
+      .field.is-grouped
+        .control.is-expanded.has-icons-left
+          %input.input{name: 'screen_name', type: 'text'}
+          %span.icon.is-small.is-left
+            %i.fa.fa-twitter
+        .control
+          %button#tweetbutton.button.is-primary{type: 'submit', action: 'search', method: :post, remote: true}
+            Get Tweets
 
-%form#twitter-form
-  %input{name: 'screen_name', type: 'text'}
-  %button#tweetbutton{type: 'submit', action: 'search', method: :post, remote: true}
-    Search Tweets
-
-.tweetbox
-  - if !@tweets.nil?
-    - @tweets.each do |tweet|
-      %p= tweet.text
+.hero-body.has-text-left
+  .tweetbox
+    - if !@tweets.nil?
+      - @tweets.each do |tweet|
+        .box
+          %article.media
+            .media-left
+              %figure.image.is-64x64
+                = image_tag 'http://bulma.io/images/placeholders/128x128.png'
+            .media-content
+              .content
+                %span.icon.is-small.is-left
+                  %i.fa.fa-twitter
+                %strong= @user.screen_name
+                %br
+                = tweet.text
+    - else
+      %p No tweets yet! Try searching a handle.
