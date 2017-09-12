@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
     end
 
     rescue Twitter::Error => e
-      flash[:notice] = :screen_name, "@#{params[:screen_name]} cannot reach tweets."
+      flash[:notice] = :screen_name, "Unable to reach tweets for @#{params[:screen_name]}."
     end
   end
 
