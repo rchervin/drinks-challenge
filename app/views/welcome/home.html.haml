@@ -14,6 +14,7 @@
         .control
           %button#tweetbutton.button.is-primary{type: 'submit', method: :post, remote: true}
             Get Tweets
+    = link_to "See Previous Searches", users_path
 
   - if flash[:notice]
     .notice= flash[:notice].last
