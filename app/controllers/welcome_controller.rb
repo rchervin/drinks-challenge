@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   before_action :clear_flash
-  before_action :check_screen_name
+  before_action :set_screen_name
 
   def home
     begin
@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
     end
 
     rescue Twitter::Error => e
-      flash[:notice] = :screen_name, "Unable to reach tweets for @#{params[:screen_name]}."
+      flash[:notice] = :screen_name, "Unable to reach tweets for @#{@user.screen_name}."
     end
   end
 
@@ -25,12 +25,12 @@ class WelcomeController < ApplicationController
     flash[:notice] = ""
   end
 
-  def check_screen_name
+  def set_screen_name
     begin
       params[:screen_name] ||= "just_drinks"
-      @twitter_user = @client.user(params[:screen_name])
+      @twitter_user = @client.user(@screen_name)
     rescue Twitter::Error => e
-      flash[:notice] = :screen_name, "@#{params[:screen_name]} does not seem to have a twitter account."
+      flash[:notice] = :screen_name, "@#{@screen_name} does not seem to have a twitter account."
     end
   end
 
