@@ -2,10 +2,10 @@
 
 %form#twitter-form
   %input{name: 'screen_name', type: 'text'}
-  %button{type: 'submit', action: 'search', method: :post, remote: true}
+  %button#tweetbutton{type: 'submit', action: 'search', method: :post, remote: true}
     Search Tweets
 
 .tweetbox
-  - if !@responses.nil?
-    - @responses.each do |tweet|
+  - if !@tweets.nil?
+    - @tweets.each do |tweet|
       %p= tweet.text
