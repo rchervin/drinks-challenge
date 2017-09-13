@@ -11,8 +11,8 @@
     .notice= flash[:notice].last
 
 .hero-body.has-text-left
-  .tweetbox
-    - @users.each_slice(4) do |users|
+  .container
+    - @users.each_slice(3) do |users|
       .columns
         - users.each do |user|
           .column
