@@ -27,7 +27,7 @@ class WelcomeController < ApplicationController
 
   def check_screen_name
     begin
-      params[:screen_name] ||= "just_drinks"
+      params[:screen_name] ||= "winespectator"
       @screen_name = params[:screen_name].downcase.gsub(/\s+/, "")
       @twitter_user = @client.user(@screen_name)
     rescue Twitter::Error => e
