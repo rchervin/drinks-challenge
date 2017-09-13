@@ -1,0 +1,32 @@
+.hero-header.has-text-centered
+  %h1.title.is-size-1 TwitterGitter
+  %p.subtitle
+    The only demo app for
+    = link_to 'Drinks.com', 'http://drinks.com', target: '_blank'
+    that gets all your tweets without repeats.
+  .column.is-half.is-offset-one-quarter
+    = link_to "See More Tweets", root_path
+
+  - if flash[:notice]
+    .notice= flash[:notice].last
+
+.hero-body.has-text-left
+  .tweetbox
+    - @users.each_slice(4) do |users|
+      .columns
+        - users.each do |user|
+          .column
+            .box
+              %article.media
+                .media-left
+                  %figure.image.is-64x64
+                    - if user.profile_url?
+                      = image_tag user.profile_url
+                    - else
+                      = image_tag 'http://www.placehold.it/64x64'
+                .media-content.is-expanded
+                  .content
+                    %span.icon.is-small.is-left
+                      %i.fa.fa-twitter
+                    %strong
+                      = link_to "@#{user.screen_name}", '/?screen_name=' + user.screen_name
