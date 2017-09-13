@@ -10,13 +10,12 @@ class User < ActiveRecord::Base
 
   def get_tweets tweets
     begin
-      if last_tweet < tweets.first.id
-        tweets.each do |tweet|
-          next if tweet.id <= last_tweet
-          Tweet.create!(content: tweet.text, user: @user)
-        end
-        update_attributes(last_tweet: tweets.first.id)
+      tweets.each do |tweet|
+        next if tweet.id <= last_tweet
+        Tweet.create!(content: tweet.text, user: @user)
       end
+
+      update_attributes(last_tweet: tweets.first.id)
 
       true
     rescue Twitter::Error => e
